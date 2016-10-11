@@ -44,4 +44,19 @@
         </div>
     </div>
 </body>
+<script>
+  var url = 'http://feeds.soundcloud.com/users/soundcloud:users:213723577/sounds.rss'
+  feednami.load(url,function(result){
+    if(result.error){
+      console.log(result.error)
+    }
+    else{
+      var entries = result.feed.entries
+      for(var i = 0; i < entries.length; i++){
+        var entry = entries[i]
+        console.log(entry.title)
+      }
+    }
+  })
+</script>
 </html>
