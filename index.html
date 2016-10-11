@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+
+    <script type="text/javascript" src="pageViewer.js"></script>
+</head>
+<body>
+    <a href="http://www.ptspice.org/" style="height:100px; visibility:visible">
+        <img class="normal" src="imgs/pentecostal_tabernacle_logo.png" alt="Logo" style="height:100%" />
+    </a>
+    <h1>WELCOME TO THE DIGITAL RESOURCE CENTER</h1>
+    <p>You can select a sermon from the dropdown list shown below. 
+        <br/> If you know the preacher of the sermon but not the title, you can use the search box to search for the speaker and a list of all sermons by that preacher will be displayed </p>
+    <div id="viewerMain">
+       
+        <div id="ptSermonSelectDiv" style="display:inline-block">
+            <div>Sermons: </div>
+            <div id="ptSermonValue">
+                <select id="ptSermonSelect">
+                    <option> </option>
+                    <option>The Crisscross Blessing</option>
+                    <option>A Culture of Blessing</option>
+                    <option>Lord Increase My Capacity</option>
+                </select>
+                <input type="submit" />
+            </div>
+        </div>
+        <form style="display:inline-block">
+            Search:
+            <input type="search" id="ptSermonSearchBox" />
+            <input type="submit" />
+        </form>
+        <div style="display:inline-block">TODO list search results</div>
+        <div>           </div>
+        <div>
+            <p>
+                *********************TODO************* 
+                <br/> make a way to switch contexts i.e. use combo box or use search box not both
+                <br/> put click event handler for submit buttons
+                <br/> make a stylesheet
+            </p>
+        </div>
+    </div>
+</body>
+</html>
