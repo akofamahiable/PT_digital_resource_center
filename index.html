@@ -4,44 +4,100 @@
     <title></title>
 	<meta charset="utf-8" />
 
-    <script type="text/javascript" src="pageViewer.js"></script>
+    <script src="https://cdn.rawgit.com/sekando/feednami-client/master/releases/1.0.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-<body>
+<script>
+    var url = 'http://feeds.soundcloud.com/users/soundcloud:users:213723577/sounds.rss'
+    feednami.load(url, function (result) {
+        if (result.error) {
+            console.log(result.error)
+        }
+        else {
+            var entries = result.feed.entries
+            for (var i = 0; i < entries.length; i++) {
+                var entry = entries[i]
+                $("#sermonList").append("<input type='checkbox' name='sermonCheckbox' value='" + entry.title + "'>" + entry.title + "</input><br>")                
+            }
+        }
+        $("#sermonList").append("<br>");
+        $("#sermonList").append("Name: <input type='text' id='nameInput' class='nameInput name='Name' required/>")
+        $("#sermonList").append("Email Address: <input type='text' id='emailInput' class= 'emailInput' name='EmailAddress' required/>")
+        $("#sermonList").append("<input type='button' id='submitButton' onclick='buttonOnClick()' value='OK' class='okButton'/>")
+       
+    })
+
+</script>
+<style>
+    .info{
+        font-size: 18px;
+        font-family:Georgia;
+        font-style:italic;
+    }
+
+    .heading{
+        text-align:center
+    }
+    .sermonForm{        
+       font-family:'Bookman Old Style';
+        font-size:16px;       
+    }
+
+    .sermonInfo{
+        font-size:18px;
+        font-family:Georgia;
+    }
+
+    .total{
+     font-size:18px;
+        font-family:Georgia;
+        font-weight:bold;
+    }
+</style>
+<body style="background-color:burlywood;">
     <a href="http://www.ptspice.org/" style="height:100px; visibility:visible">
         <img class="normal" src="imgs/pentecostal_tabernacle_logo.png" alt="Logo" style="height:100%" />
     </a>
-    <h1>WELCOME TO THE DIGITAL RESOURCE CENTER</h1>
-    <p>You can select a sermon from the dropdown list shown below. 
-        <br/> If you know the preacher of the sermon but not the title, you can use the search box to search for the speaker and a list of all sermons by that preacher will be displayed </p>
+    <h1 class="heading">WELCOME TO THE DIGITAL RESOURCE CENTER</h1>
+    
     <div id="viewerMain">
+        <p class="info">
+            You can select as many sermons as you'd like. Each CD costs $5.
+        </p>
+        <p class="info">When you're done with your selection, click on submit and your request will be sent to the resource center. </p>
        
-        <div id="ptSermonSelectDiv" style="display:inline-block">
-            <div>Sermons: </div>
-            <div id="ptSermonValue">
-                <select id="ptSermonSelect">
-                    <option> </option>
-                    <option>The Crisscross Blessing</option>
-                    <option>A Culture of Blessing</option>
-                    <option>Lord Increase My Capacity</option>
-                </select>
-                <input type="submit" />
-            </div>
-        </div>
-        <form style="display:inline-block">
-            Search:
-            <input type="search" id="ptSermonSearchBox" />
-            <input type="submit" />
-        </form>
-        <div style="display:inline-block">TODO list search results</div>
-        <div>           </div>
-        <div>
-            <p>
-                *********************TODO************* 
-                <br/> make a way to switch contexts i.e. use combo box or use search box not both
-                <br/> put click event handler for submit buttons
-                <br/> make a stylesheet
-            </p>
-        </div>
+        <form id="sermonList" class="sermonForm"></form>
+        
     </div>
 </body>
+<script>
+    function buttonOnClick() {
+        var items = document.getElementsByName("sermonCheckbox");
+        var name = document.getElementById("nameInput").value;
+        var email = document.getElementById("emailInput").value;
+
+        if (name == "" || email == "")
+            alert("Name & email address required to proceed");
+        else {
+            var selected = [];
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].checked)
+                    selected.push(items[i])
+            }
+            $("#viewerMain").empty();
+
+            var total = selected.length * 5;
+
+            $("#viewerMain").append("<p class='info'>Thank you " + name + "! You'll be notified by email at " + email + " when your order is ready to be picked up. Please have your payment ready when you pick up your cd. </p>")
+            $("#viewerMain").append("<br><p class='info'>Here's a list of sermons you selected: </p>")
+           
+
+            for (var i = 0; i < selected.length; i++) {
+                $("#viewerMain").append("<p class='sermonInfo'>" + selected[i].value + "</p>");
+            }
+
+            $("#viewerMain").append("<br><p class='total'>Your total is $" + total + "</p>");
+        }
+    }
+</script>
 </html>
