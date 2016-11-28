@@ -8,7 +8,6 @@
     <script src="https://cdn.rawgit.com/sekando/feednami-client/master/releases/1.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <script type="text/javascript" src="pageViewer.js"></script>
     <script src="https://cdn.rawgit.com/sekando/feednami-client/master/releases/1.0.2.min.js"></script>
 
 </head>
@@ -26,9 +25,11 @@
             }
         }
         $("#sermonList").append("<br>");
-        $("#sermonList").append("Name: <input type='text' id='nameInput' class='nameInput name='Name' required/>")
-        $("#sermonList").append("Email Address: <input type='text' id='emailInput' class= 'emailInput' name='EmailAddress' required/>")
-        $("#sermonList").append("<input type='button' id='submitButton' onclick='buttonOnClick()' value='OK' class='okButton'/>")
+        $("#sermonList").append("Name: <input type='text' id='nameInput' class='nameInput name='Name' required/>");
+        $("#sermonList").append("Email Address: <input type='text' id='emailInput' class= 'emailInput' name='EmailAddress' required/>");
+        $("#sermonList").append("<input type='button' id='submitButton' onclick='buttonOnClick()' value='OK' class='okButton'/>");
+                  
+                  
        
     })
 
@@ -67,7 +68,7 @@
     
     <div id="viewerMain">
         <p class="info">
-            You can select as many sermons as you'd like. Each CD costs $5.
+            You can select as many sermons as you'd like. Each CD costs $3.
         </p>
         <p class="info">When you're done with your selection, click on submit and your request will be sent to the resource center. </p>
        
@@ -81,32 +82,36 @@
         var items = document.getElementsByName("sermonCheckbox");
         var name = document.getElementById("nameInput").value;
         var email = document.getElementById("emailInput").value;
+        var messages = "";
 
         if (name == "" || email == "")
             alert("Name & email address required to proceed");
         else {
             var selected = [];
+            /*console.log(items);*/
             for (var i = 0; i < items.length; i++) {
                 if (items[i].checked)
-                    selected.push(items[i])
+                selected.push(items[i].value);
             }
             $("#viewerMain").empty();
 
-            var total = selected.length * 5;
+            var total = selected.length * 3;
 
             $("#viewerMain").append("<p class='info'>Thank you " + name + "! You'll be notified by email at " + email + " when your order is ready to be picked up. Please have your payment ready when you pick up your cd. </p>")
             $("#viewerMain").append("<br><p class='info'>Here's a list of sermons you selected: </p>")
            
 
             for (var i = 0; i < selected.length; i++) {
-                $("#viewerMain").append("<p class='sermonInfo'>" + selected[i].value + "</p>");
+                $("#viewerMain").append("<p class='sermonInfo'>" + selected[i] + "</p>");
+                messages += selected[i]+"\n";
             }
 
             $("#viewerMain").append("<br><p class='total'>Your total is $" + total + "</p>");
+            console.log(messages);
         }
     }
 
-  var url = 'http://feeds.soundcloud.com/users/soundcloud:users:213723577/sounds.rss'
+  /*var url = 'http://feeds.soundcloud.com/users/soundcloud:users:213723577/sounds.rss'
   feednami.load(url,function(result){
     if(result.error){
       console.log(result.error)
@@ -118,7 +123,7 @@
         console.log(entry.title)
       }
     }
-  })
+  })*/
 
 </script>
 </html>
