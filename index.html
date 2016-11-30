@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title></title>
@@ -77,14 +77,17 @@
     </div>
 </body>
 <script>
-
+    function validEmail(email) { // Validate email character list
+        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        return re.test(email);
+    }
     function buttonOnClick() {
         var items = document.getElementsByName("sermonCheckbox");
         var name = document.getElementById("nameInput").value;
         var email = document.getElementById("emailInput").value;
         var messages = "";
 
-        if (name == "" || email == "")
+        if (name == "" || !validEmail(email))
             alert("Name & email address required to proceed");
         else {
             var selected = [];
@@ -107,23 +110,22 @@
             }
 
             $("#viewerMain").append("<br><p class='total'>Your total is $" + total + "</p>");
-            console.log(messages);
+            /*console.log("Name: " + name);
+            console.log("Email: " + email);
+            console.log("Messages: " + messages);*/
+            
+            //Post to Google doc app script
+            $.ajax({
+               url: 'https://script.google.com/macros/s/AKfycbzhp69-xsLW63k_Mm_TdHLPF9WOPWF_18v3i3Kx80JO8Bj0415n/exec',
+               type: 'POST',
+               data: {'Name': name, 'Email': email, 'Audio Messages': messages, 'Video Messages': "N/A", 'Total': total}, // An object with the key 'submit' and value 'true;
+               success: function (result) {
+                   console.log("email has been sent");
+               }
+           });
         }
     }
 
-  /*var url = 'http://feeds.soundcloud.com/users/soundcloud:users:213723577/sounds.rss'
-  feednami.load(url,function(result){
-    if(result.error){
-      console.log(result.error)
-    }
-    else{
-      var entries = result.feed.entries
-      for(var i = 0; i < entries.length; i++){
-        var entry = entries[i]
-        console.log(entry.title)
-      }
-    }
-  })*/
 
 </script>
 </html>
