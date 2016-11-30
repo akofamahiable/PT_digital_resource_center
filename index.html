@@ -28,8 +28,6 @@
         $("#sermonList").append("Name: <input type='text' id='nameInput' class='nameInput name='Name' required/>");
         $("#sermonList").append("Email Address: <input type='text' id='emailInput' class= 'emailInput' name='EmailAddress' required/>");
         $("#sermonList").append("<input type='button' id='submitButton' onclick='buttonOnClick()' value='OK' class='okButton'/>");
-                  
-                  
        
     })
 
@@ -62,7 +60,7 @@
 </style>
 <body style="background-color:burlywood;">
     <a href="http://www.ptspice.org/" style="height:100px; visibility:visible">
-        <img class="normal" src="imgs/pentecostal_tabernacle_logo.png" alt="Logo" style="height:100%" />
+        <img class="normal" src="http://pz01.dsild0owpxproqch70et.netdna-cdn.com/wp-content/uploads/2015/12/pentecostal_tabernacle_logo.png" alt="Logo" style="height:100%" />
     </a>
     <h1 class="heading">WELCOME TO THE DIGITAL RESOURCE CENTER</h1>
     
@@ -115,15 +113,36 @@
             console.log("Messages: " + messages);*/
             
             //Post to Google doc app script
-            $.ajax({
+            /*$.ajax({
                url: 'https://script.google.com/macros/s/AKfycbzhp69-xsLW63k_Mm_TdHLPF9WOPWF_18v3i3Kx80JO8Bj0415n/exec',
                type: 'POST',
                data: {'Name': name, 'Email': email, 'Audio Messages': messages, 'Video Messages': "N/A", 'Total': total}, // An object with the key 'submit' and value 'true;
                success: function (result) {
                    console.log("email has been sent");
                }
-           });
-        }
+           });*/
+           
+           var data = {'Name': name, 'Email': email, 'Audio Messages': messages, 'Video Messages': "N/A", 'Total': total}; // An object
+           var url = 'https://script.google.com/macros/s/AKfycbzhp69-xsLW63k_Mm_TdHLPF9WOPWF_18v3i3Kx80JO8Bj0415n/exec';
+           
+           // Encode URL
+           var xhr = new XMLHttpRequest();
+           xhr.open('POST', url);
+           // xhr.withCredentials = true;
+           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+           xhr.onreadystatechange = function() {
+               //console.log( xhr.status, xhr.statusText )
+               //console.log(xhr.responseText);
+               //document.getElementById('gform').style.display = 'none'; // hide form
+               //document.getElementById('thankyou_message').style.display = 'block';
+               return;
+           };
+           // url encode form data for sending as post data
+           var encoded = Object.keys(data).map(function(k) {
+               return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+               }).join('&')
+               xhr.send(encoded);
+           }
     }
 
 
