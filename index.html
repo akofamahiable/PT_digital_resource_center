@@ -8,7 +8,6 @@
     <script src="https://cdn.rawgit.com/sekando/feednami-client/master/releases/1.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <script type="text/javascript" src="pageViewer.js"></script>
     <script src="https://cdn.rawgit.com/sekando/feednami-client/master/releases/1.0.2.min.js"></script>
 
 </head>
@@ -25,100 +24,151 @@
                 $("#sermonList").append("<input type='checkbox' name='sermonCheckbox' value='" + entry.title + "'>" + entry.title + "</input><br>")                
             }
         }
+      //  $("#sermonList").append("<img src='imgs/bibleverse.jpg' style='float:right; height:230px'/>")
         $("#sermonList").append("<br>");
-        $("#sermonList").append("Name: <input type='text' id='nameInput' class='nameInput name='Name' required/>")
-        $("#sermonList").append("Email Address: <input type='text' id='emailInput' class= 'emailInput' name='EmailAddress' required/>")
-        $("#sermonList").append("<input type='button' id='submitButton' onclick='buttonOnClick()' value='OK' class='okButton'/>")
+        $("#sermonList").append("Name: <input type='text' id='nameInput' class='nameInput name='Name' required/>");
+        $("#sermonList").append("Email Address: <input type='text' id='emailInput' class= 'emailInput' name='EmailAddress' required/>");
+        $("#sermonList").append("<input type='button' id='submitButton' onclick='buttonOnClick()' value='Submit' class='okButton'/>");
        
     })
 
 </script>
 <style>
-    .info{
-        font-size: 18px;
-        font-family:Georgia;
+    .infoBefore{
+        font-size: 24px;
+        font-family:Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
         font-style:italic;
+        color:burlywood;
+    }
+
+    .infoAfter{
+        font-size: 24px;
+        font-family:Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+        color:burlywood;
     }
 
     .heading{
-        text-align:center
+        text-align:center;
+        font-size:100px; font-family:'proxima-nova','Montserrat',sans-serif !important; 
+        color:chocolate;
+        text-shadow: 5px 10px 10px #000000;
     }
-    .sermonForm{        
-       font-family:'Bookman Old Style';
-        font-size:16px;       
-    }
-
-    .sermonInfo{
-        font-size:18px;
-        font-family:Georgia;
-    }
-
-    .total{
-     font-size:18px;
-        font-family:Georgia;
+    .sermonForm {
+        font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
         font-weight:bold;
+        font-size: 16px;
+        color: chocolate;
     }
-</style>
-<body style="background-color:burlywood;">
-    <a href="http://www.ptspice.org/" style="height:100px; visibility:visible">
-        <img class="normal" src="imgs/pentecostal_tabernacle_logo.png" alt="Logo" style="height:100%" />
-    </a>
-    <h1 class="heading">WELCOME TO THE DIGITAL RESOURCE CENTER</h1>
+
+    .sermonInfo {
+        font-size: 18px;
+        font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;;
+        color:chocolate;
+    }
+
+    .total {
+        font-size: 24px;
+        font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+        font-weight: bold;
+        color:burlywood;
+    }
+    }
+
+    .pageBody {
+        background-color: ivory;
+    }
     
+</style>
+<body class="pageBody">
+    <a href="http://www.ptspice.org/" style="height:100px; visibility:visible">
+        <img class="normal" src="http://pz01.dsild0owpxproqch70et.netdna-cdn.com/wp-content/uploads/2015/12/pentecostal_tabernacle_logo.png" alt="Logo" style="height:100%" />
+        <img src="imgs/sermons.jpg" style="float:right; height:100px;" />
+    </a>
+    <h1 class="heading">
+        PT RESOURCE CENTER
+    </h1>
     <div id="viewerMain">
-        <p class="info">
-            You can select as many sermons as you'd like. Each CD costs $5.
+        <p class="infoBefore">
+            You can select as many sermons as you'd like. Each CD costs $3.
         </p>
-        <p class="info">When you're done with your selection, click on submit and your request will be sent to the resource center. </p>
+        <p class="infoBefore">When you're done with your selection, put in your name and email address and click the "Submit" button </p>
        
-        <form id="sermonList" class="sermonForm"></form>
+        <form id="sermonList" class="sermonForm">
+        </form>
         
     </div>
 </body>
 <script>
-
+    function validEmail(email) { // Validate email character list
+        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        return re.test(email);
+    }
     function buttonOnClick() {
         var items = document.getElementsByName("sermonCheckbox");
         var name = document.getElementById("nameInput").value;
         var email = document.getElementById("emailInput").value;
+        var messages = "";
 
-        if (name == "" || email == "")
+        if (name == "" || !validEmail(email))
             alert("Name & email address required to proceed");
         else {
             var selected = [];
+            /*console.log(items);*/
             for (var i = 0; i < items.length; i++) {
                 if (items[i].checked)
-                    selected.push(items[i])
+                selected.push(items[i].value);
             }
             $("#viewerMain").empty();
 
-            var total = selected.length * 5;
+            var total = selected.length * 3;
 
-            $("#viewerMain").append("<p class='info'>Thank you " + name + "! You'll be notified by email at " + email + " when your order is ready to be picked up. Please have your payment ready when you pick up your cd. </p>")
-            $("#viewerMain").append("<br><p class='info'>Here's a list of sermons you selected: </p>")
+            $("#viewerMain").append("<p class='infoAfter'>Thank you " + name + "! You'll be notified by email at " + email + " when your order is ready to be picked up. Please have your payment ready when you pick up your cd. </p>")
+            $("#viewerMain").append("<p class='infoAfter'>Here's a list of sermons you selected: </p>")
            
 
             for (var i = 0; i < selected.length; i++) {
-                $("#viewerMain").append("<p class='sermonInfo'>" + selected[i].value + "</p>");
+                $("#viewerMain").append("<p class='sermonInfo'>" + selected[i] + "</p>");
+                messages += selected[i]+"\n";
             }
 
-            $("#viewerMain").append("<br><p class='total'>Your total is $" + total + "</p>");
-        }
+            $("#viewerMain").append("<p class='total'>Your total is $" + total + "</p>");
+            /*console.log("Name: " + name);
+            console.log("Email: " + email);
+            console.log("Messages: " + messages);*/
+            
+            //Post to Google doc app script
+            /*$.ajax({
+               url: 'https://script.google.com/macros/s/AKfycbzhp69-xsLW63k_Mm_TdHLPF9WOPWF_18v3i3Kx80JO8Bj0415n/exec',
+               type: 'POST',
+               data: {'Name': name, 'Email': email, 'Audio Messages': messages, 'Video Messages': "N/A", 'Total': total}, // An object with the key 'submit' and value 'true;
+               success: function (result) {
+                   console.log("email has been sent");
+               }
+           });*/
+           
+           var data = {'Name': name, 'Email': email, 'Audio Messages': messages, 'Video Messages': "N/A", 'Total': total}; // An object
+           var url = 'https://script.google.com/macros/s/AKfycbzhp69-xsLW63k_Mm_TdHLPF9WOPWF_18v3i3Kx80JO8Bj0415n/exec';
+           
+           // Encode URL
+           var xhr = new XMLHttpRequest();
+           xhr.open('POST', url);
+           // xhr.withCredentials = true;
+           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+           xhr.onreadystatechange = function() {
+               //console.log( xhr.status, xhr.statusText )
+               //console.log(xhr.responseText);
+               //document.getElementById('gform').style.display = 'none'; // hide form
+               //document.getElementById('thankyou_message').style.display = 'block';
+               return;
+           };
+           // url encode form data for sending as post data
+           var encoded = Object.keys(data).map(function(k) {
+               return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+               }).join('&')
+               xhr.send(encoded);
+           }
     }
 
-  var url = 'http://feeds.soundcloud.com/users/soundcloud:users:213723577/sounds.rss'
-  feednami.load(url,function(result){
-    if(result.error){
-      console.log(result.error)
-    }
-    else{
-      var entries = result.feed.entries
-      for(var i = 0; i < entries.length; i++){
-        var entry = entries[i]
-        console.log(entry.title)
-      }
-    }
-  })
 
 </script>
 </html>
